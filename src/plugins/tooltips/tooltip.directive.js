@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    angular.module('gantt.tooltips').directive('ganttTooltip', ['$log','$timeout', '$compile', '$document', '$templateCache', 'ganttDebounce', 'ganttSmartEvent', function($log, $timeout, $compile, $document, $templateCache, debounce, smartEvent) {
+    angular.module('gantt.tooltips').directive('ganttTooltip', ['$log','$timeout', '$compile', '$document', '$templateCache', 'ganttDebounce', 'ganttSmartEvent', 'moment', function($log, $timeout, $compile, $document, $templateCache, debounce, smartEvent, moment) {
         // This tooltip displays more information about a task
 
         return {
@@ -39,7 +39,7 @@
                     }
 
                     var dateFormat = utils.firstProperty([taskTooltips, rowTooltips], 'dateFormat', $scope.pluginScope.dateFormat);
-                    return $scope.task.model.from.format(dateFormat);
+                    return moment($scope.task.model.from).format(dateFormat);
                 };
 
                 $scope.getToLabel = function() {
@@ -55,7 +55,7 @@
                     }
 
                     var dateFormat = utils.firstProperty([taskTooltips, rowTooltips], 'dateFormat', $scope.pluginScope.dateFormat);
-                    return $scope.task.model.to.format(dateFormat);
+                    return moment($scope.task.model.to).format(dateFormat);
                 };
 
                 var mouseMoveHandler = smartEvent($scope, bodyElement, 'mousemove', debounce(function(e) {
